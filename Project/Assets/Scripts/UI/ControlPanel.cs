@@ -14,6 +14,7 @@ public class ControlPanel : MonoBehaviour
         {
             new Dropdown.OptionData("普通子弹"),
             new Dropdown.OptionData("跟踪子弹"),
+            new Dropdown.OptionData("进停子弹")
         };
 
         BulletDropdown.AddOptions(optionDatas);
@@ -33,6 +34,9 @@ public class ControlPanel : MonoBehaviour
                 GameObject go = LoadBullet("FollowBullet");
                 go.GetComponent<FollowBullet>().DoStart(Enemy, 10);
                 break;
+            case 2:
+                GameObject go2 = LoadBullet("MoveStopBullet");
+                break;
         }
     }
 
@@ -41,6 +45,7 @@ public class ControlPanel : MonoBehaviour
         GameObject prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + name + ".prefab");
         GameObject go = Instantiate(prefab);
         go.transform.position = Vector3.zero;
+        go.transform.rotation = Camera.main.transform.rotation;
         return go;
     }
 }
