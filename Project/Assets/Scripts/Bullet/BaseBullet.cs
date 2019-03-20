@@ -1,30 +1,34 @@
 ﻿using UnityEngine;
 
-public abstract class BaseBullet
+public abstract class BaseBullet : MonoBehaviour
 {
-    public BulletType BulletType { get; private set; }
-    protected string mAssetName;
+    [SerializeField]
+    protected float mSpeed = 10; //移动速度
 
-    //public static BaseBullet Factory(BulletType bulletType)
-    //{
-    //    switch(bulletType)
-    //    {
-    //        case BulletType.Normal:
-    //            return new NormalBullet();
-    //        default:
-    //            Debug.LogError("不存在该子弹类型：" + bulletType.ToString());
-    //            return new NormalBullet();
-    //    }
-    //}
+    [SerializeField]
+    protected float mAccerate = 1; //加速度
 
-    public void DoStart(BulletType bulletType)
+    [SerializeField]
+    protected float mRemainLifeTime = 10f; //剩余生命时长
+
+    public BulletType BulletType { get; protected set; }
+    
+    public virtual void DoStart(float speed, float accerate, float lifeTime)
     {
-        BulletType = bulletType;
-        mAssetName = BulletType.ToString();
+        mSpeed = speed;
+        mAccerate = accerate;
+        mRemainLifeTime = lifeTime;
     }
 
-    public void Excute()
+    public virtual void DoDestroy()
     {
+        Destroy(gameObject);
+    }
 
+    protected void DecreaseTimeNCheckDestroy(float deltaTime)
+    {
+        mRemainLifeTime -= deltaTime;
+        if (mRemainLifeTime <= 0)
+            DoDestroy();
     }
 }

@@ -33,7 +33,7 @@ public class ControlPanel : MonoBehaviour
                 break;
             case 1:
                 GameObject go = LoadBullet("FollowBullet");
-                go.GetComponent<FollowBullet>().DoStart(Enemy, 10);
+                go.GetComponent<FollowBullet>().DoStart(20, 1, 10, Enemy);
                 break;
             case 2:
                 GameObject go2 = LoadBullet("MoveStopBullet");

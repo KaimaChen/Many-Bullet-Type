@@ -1,16 +1,7 @@
 ﻿using UnityEngine;
 
-public class MoveStopBullet : MonoBehaviour
+public class MoveStopBullet : BaseBullet
 {
-    [SerializeField]
-    private float mSpeed = 15;
-
-    [SerializeField]
-    private float mAccerate = -10;
-
-    [SerializeField]
-    private float mRemainLifeTime = 1f;
-
     private float mMaxSpeed;
 
     void Start()
@@ -30,13 +21,6 @@ public class MoveStopBullet : MonoBehaviour
         if (mSpeed <= 0 || mSpeed >= mMaxSpeed)
             mAccerate = -mAccerate;
 
-        mRemainLifeTime -= deltaTime;
-        if (mRemainLifeTime <= 0)
-            DoDestroy();
-    }
-
-    void DoDestroy()
-    {
-        Destroy(gameObject);
+        DecreaseTimeNCheckDestroy(deltaTime);
     }
 }

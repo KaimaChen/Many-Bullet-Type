@@ -1,13 +1,7 @@
 ﻿using UnityEngine;
 
-public class NormalBullet : MonoBehaviour
+public class NormalBullet : BaseBullet
 {
-    [SerializeField]
-    private float mSpeed = 15;
-
-    [SerializeField]
-    private float mRemainLifeTime = 1f;
-
     void Update()
     {
         float deltaTime = Mathf.Min(mRemainLifeTime, Time.deltaTime);
@@ -16,13 +10,8 @@ public class NormalBullet : MonoBehaviour
         float offset = mSpeed * deltaTime;
         transform.localPosition = new Vector3(originLocalPos.x, originLocalPos.y, originLocalPos.z + offset);
 
-        mRemainLifeTime -= deltaTime;
-        if (mRemainLifeTime <= 0)
-            DoDestroy();
-    }
+        mSpeed += mAccerate * deltaTime;
 
-    void DoDestroy()
-    {
-        Destroy(gameObject);
+        DecreaseTimeNCheckDestroy(deltaTime);
     }
 }

@@ -1,22 +1,17 @@
 ﻿using UnityEngine;
 
-public class FollowBullet : MonoBehaviour
+public class FollowBullet : BaseBullet
 {
     private const float kMinDistance = 0.5f; //距离小于此值时视为到达目标
-
-    [SerializeField]
-    private float mSpeed = 15;
-
-    [SerializeField]
-    private float mRemainLifeTime = 1f;
-
+    
     [SerializeField]
     private Transform mTarget;
 
-    public void DoStart(Transform target, float lifeTime)
+    public void DoStart(float speed, float accerate, float lifeTime, Transform target)
     {
+        base.DoStart(speed, accerate, lifeTime);
+
         mTarget = target;
-        mRemainLifeTime = lifeTime;
     }
 
     void Update()
@@ -41,14 +36,7 @@ public class FollowBullet : MonoBehaviour
 
         transform.position = transform.position + toTargetDir * offset;
         transform.rotation = Quaternion.LookRotation(toTargetDir);
-        
-        mRemainLifeTime -= deltaTime;
-        if (mRemainLifeTime <= 0)
-            DoDestroy();
-    }
 
-    void DoDestroy()
-    {
-        Destroy(gameObject);
+        DecreaseTimeNCheckDestroy(deltaTime);
     }
 }

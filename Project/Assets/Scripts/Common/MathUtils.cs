@@ -2,10 +2,9 @@
 
 public static class MathUtils
 {
-    public static bool CalcParabolaData(Vector3 srcPos, Vector3 targetPos, float horizontalSpeed, float horizontalAccerate, float gravity, out Vector3 resultVelocity, out Vector3 resultAccerate)
+    public static bool CalcParabolaData(Vector3 srcPos, Vector3 targetPos, float horizontalSpeed, float horizontalAccerate, float gravity, out ParabolaData result)
     {
-        resultVelocity = Vector3.zero;
-        resultAccerate = Vector3.zero;
+        result = new ParabolaData();
 
         if(srcPos == targetPos)
         {
@@ -69,8 +68,9 @@ public static class MathUtils
             speedY = upTime * gravity;
         }
 
-        resultVelocity = new Vector3(velocity.x, speedY, velocity.y);
-        resultAccerate = new Vector3(accerate.x, -gravity, accerate.y);
+        result.TotalTime = totalTime;
+        result.Velocity = new Vector3(velocity.x, speedY, velocity.y);
+        result.Accerate = new Vector3(accerate.x, -gravity, accerate.y);
 
         return true;
     }
@@ -82,4 +82,11 @@ public static class MathUtils
         root1 = (-b + delta) / a2;
         root2 = (-b - delta) / a2;
     }
+}
+
+public struct ParabolaData
+{
+    public Vector3 Velocity;
+    public Vector3 Accerate;
+    public float TotalTime;
 }

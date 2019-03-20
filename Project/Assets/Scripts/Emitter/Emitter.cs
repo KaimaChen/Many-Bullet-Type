@@ -19,7 +19,7 @@ public class Emitter
     {
         if(curTime >= mTriggerTime)
         {
-            mBullet.Excute();
+            //mBullet.Excute();
             return true;
         }
         else
