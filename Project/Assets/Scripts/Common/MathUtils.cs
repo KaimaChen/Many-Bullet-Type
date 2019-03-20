@@ -2,9 +2,10 @@
 
 public static class MathUtils
 {
-    public static bool CalcParabolaData(Vector3 srcPos, Vector3 targetPos, float horizontalSpeed, float horizontalAccerate, float gravity, out ParabolaData result)
+    public static bool CalcParabolaData(Vector3 srcPos, Vector3 targetPos, float horizontalSpeed, float horizontalAccerate, float gravity, out Vector3 resultVelocity, out Vector3 resultAccerate)
     {
-        result = new ParabolaData();
+        resultVelocity = Vector3.zero;
+        resultAccerate = Vector3.zero;
 
         if(srcPos == targetPos)
         {
@@ -18,18 +19,22 @@ public static class MathUtils
             return false;
         }
 
-        Vector2 horizontalSrcPos = new Vector2(srcPos.x, srcPos.y);
-        Vector2 horizontalTargetPos = new Vector2(targetPos.x, targetPos.y);
+        Vector2 horizontalSrcPos = new Vector2(srcPos.x, srcPos.z);
+        Vector2 horizontalTargetPos = new Vector2(targetPos.x, targetPos.z);
         Vector2 hToTarget = horizontalTargetPos - horizontalSrcPos;
-        float totalTime;
         float horizontalDist = hToTarget.magnitude;
+
+        float totalTime;
         if(horizontalAccerate == 0) //匀速运动
         {
             totalTime = horizontalDist / horizontalSpeed;
         }
         else
         {
-            ResolveQuadraticEquation(horizontalAccerate, horizontalSpeed, -horizontalDist, out float root1, out float root2);
+            float a = 0.5f * horizontalAccerate;
+            float b = horizontalSpeed;
+            float c = -horizontalDist;
+            ResolveQuadraticEquation(a, b, c, out float root1, out float root2);
             totalTime = root1 > 0 ? root1 : root2;
         }
 
@@ -45,22 +50,27 @@ public static class MathUtils
 
         Vector2 horizontalDir = hToTarget.normalized;
         Vector2 velocity = horizontalDir * horizontalSpeed;
+        Vector2 accerate = horizontalDir * horizontalAccerate;
         float absDeltaY = deltaY > 0 ? deltaY : -deltaY;
+        float speedY;
         
         if(upTime >= totalTime) //全部时间向上飞
         {
             upTime = totalTime;
-            result.mSpeedY = (absDeltaY - gravity * totalTime * totalTime / 2) / totalTime;
+            speedY = (absDeltaY - gravity * totalTime * totalTime / 2) / totalTime;
         }
         else if(upTime <= 0) //全部时间向下飞
         {
             upTime = 0;
-            result.mSpeedY = -(absDeltaY - gravity * totalTime * totalTime / 2) / totalTime;
+            speedY = -(absDeltaY - gravity * totalTime * totalTime / 2) / totalTime;
         }
         else
         {
-            result.mSpeedY = upTime * gravity;
+            speedY = upTime * gravity;
         }
+
+        resultVelocity = new Vector3(velocity.x, speedY, velocity.y);
+        resultAccerate = new Vector3(accerate.x, -gravity, accerate.y);
 
         return true;
     }
@@ -72,9 +82,4 @@ public static class MathUtils
         root1 = (-b + delta) / a2;
         root2 = (-b - delta) / a2;
     }
-}
-
-public struct ParabolaData
-{
-    public float mSpeedY;
 }

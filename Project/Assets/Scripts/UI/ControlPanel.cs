@@ -14,7 +14,8 @@ public class ControlPanel : MonoBehaviour
         {
             new Dropdown.OptionData("普通子弹"),
             new Dropdown.OptionData("跟踪子弹"),
-            new Dropdown.OptionData("进停子弹")
+            new Dropdown.OptionData("进停子弹"),
+            new Dropdown.OptionData("抛物线子弹"),
         };
 
         BulletDropdown.AddOptions(optionDatas);
@@ -36,6 +37,10 @@ public class ControlPanel : MonoBehaviour
                 break;
             case 2:
                 GameObject go2 = LoadBullet("MoveStopBullet");
+                break;
+            case 3:
+                GameObject go3 = LoadBullet("ParabolaBullet");
+                go3.GetComponent<ParabolaBullet>().DoStart(5, 1, Enemy.position);
                 break;
         }
     }

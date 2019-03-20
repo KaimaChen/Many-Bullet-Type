@@ -9,25 +9,34 @@ public class ParabolaBullet : MonoBehaviour
 
     [SerializeField]
     private float mHorizontalAccerate = 10f;
-
+    
     [SerializeField]
-    private float mRemainLifeTime = 1f;
+    private Vector3 mTargetPos;
+
+    private Vector3 mVelocity;
+    private Vector3 mAccerate;
+
+    public void DoStart(float hSpeed, float hAccerate, Vector3 targetPos)
+    {
+        mHorizontalSpeed = hSpeed;
+        mHorizontalAccerate = hAccerate;
+        mTargetPos = targetPos;
+    }
 
     void Start()
     {
-
+        if (!MathUtils.CalcParabolaData(transform.position, mTargetPos, mHorizontalSpeed, mHorizontalAccerate, kGravity, out mVelocity, out mAccerate))
+            transform.position = new Vector3(transform.position.x, -1, transform.position.z);
     }
 
     void Update()
     {
-        float deltaTime = Mathf.Min(mRemainLifeTime, Time.deltaTime);
+        float deltaTime = Time.deltaTime;
+        Vector3 offset = mVelocity * deltaTime;
+        transform.position = transform.position + offset;
+        mVelocity += mAccerate * deltaTime;
 
-        Vector3 originLocalPos = transform.localPosition;
-        float offset = mHorizontalSpeed * deltaTime;
-        transform.localPosition = new Vector3(originLocalPos.x, originLocalPos.y, originLocalPos.z + offset);
-
-        mRemainLifeTime -= deltaTime;
-        if (mRemainLifeTime <= 0)
+        if (transform.position.y <= 0)
             DoDestroy();
     }
 
