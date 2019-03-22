@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Emitter
+public class Emitter : MonoBehaviour
 {
-    private readonly float mTriggerTime;
-    private readonly Vector3 mOffset;
-    private readonly BaseBullet mBullet;
+    private float mTriggerTime;
+    private Vector3 mOffset;
 
-    public Emitter(float triggerTime, Vector3 offset, BaseBullet bullet)
+    private BulletType mBulletType;
+    private float mSpeed;
+    private float mAccerate;
+    private float mLifeTime;
+    private Transform mTarget;
+
+    public Emitter(float triggerTime, Vector3 offset, BulletType bulletType, float speed, float accerate, float lifeTime, Transform target)
     {
         mTriggerTime = triggerTime;
         mOffset = offset;
-        mBullet = bullet;
+        mBulletType = bulletType;
+        mSpeed = speed;
+        mAccerate = accerate;
+        mLifeTime = lifeTime;
+        mTarget = target;
     }
 
     public bool CheckTrigger(float curTime)
