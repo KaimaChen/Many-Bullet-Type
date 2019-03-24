@@ -22,7 +22,7 @@ public static class BulletFactory
 
     private static BaseBullet CreateNormalBullet(BulletInitData initData)
     {
-        GameObject go = LoadBullet("NormalBullet", initData.Position, initData.Rotation);
+        GameObject go = LoadBullet(initData.BulletType, initData.Position, initData.Rotation);
         NormalBullet normalBullet = go.GetComponent<NormalBullet>();
         normalBullet.DoStart(initData.Speed, initData.Accerate, initData.LifeTime);
         return normalBullet;
@@ -30,7 +30,7 @@ public static class BulletFactory
 
     private static BaseBullet CreateFollowBullet(BulletInitData initData)
     {
-        GameObject go = LoadBullet("FollowBullet", initData.Position, initData.Rotation);
+        GameObject go = LoadBullet(initData.BulletType, initData.Position, initData.Rotation);
         FollowBullet followBullet = go.GetComponent<FollowBullet>();
         followBullet.DoStart(initData.Speed, initData.Accerate, initData.LifeTime, initData.Target);
         return followBullet;
@@ -38,7 +38,7 @@ public static class BulletFactory
 
     private static BaseBullet CreateMoveStopBullet(BulletInitData initData)
     {
-        GameObject go = LoadBullet("MoveStopBullet", initData.Position, initData.Rotation);
+        GameObject go = LoadBullet(initData.BulletType, initData.Position, initData.Rotation);
         MoveStopBullet moveStopBullet = go.GetComponent<MoveStopBullet>();
         moveStopBullet.DoStart(initData.Speed, initData.Accerate, initData.LifeTime);
         return moveStopBullet;
@@ -46,15 +46,15 @@ public static class BulletFactory
 
     private static BaseBullet CreateParabolaBullet(BulletInitData initData)
     {
-        GameObject go = LoadBullet("ParabolaBullet", initData.Position, initData.Rotation);
+        GameObject go = LoadBullet(initData.BulletType, initData.Position, initData.Rotation);
         ParabolaBullet parabolaBullet = go.GetComponent<ParabolaBullet>();
         parabolaBullet.DoStart(initData.Speed, initData.Accerate, initData.Target.position);
         return parabolaBullet;
     }
 
-    private static GameObject LoadBullet(string name, Vector3 position, Quaternion rotation)
+    private static GameObject LoadBullet(BulletType bulletType, Vector3 position, Quaternion rotation)
     {
-        GameObject prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + name + ".prefab");
+        GameObject prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/{bulletType.ToString()}Bullet.prefab");
         GameObject go = GameObject.Instantiate(prefab);
         go.transform.position = position;
         go.transform.rotation = rotation;
