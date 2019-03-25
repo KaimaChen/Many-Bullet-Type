@@ -2,20 +2,20 @@
 
 public class Emitter : MonoBehaviour
 {
-    private readonly float mTriggerTime;
+    public float TriggerTime { get; private set; }
     private readonly Vector3 mOffset;
     private readonly BulletInitData mBulletInitData;
 
     public Emitter(float triggerTime, Vector3 offset, BulletInitData bulletInitData)
     {
-        mTriggerTime = triggerTime;
+        TriggerTime = triggerTime;
         mOffset = offset;
         mBulletInitData = bulletInitData;
     }
 
     public bool CheckTrigger(float curTime)
     {
-        if(curTime >= mTriggerTime)
+        if(curTime >= TriggerTime)
         {
             BulletFactory.Create(mBulletInitData);
             return true;
