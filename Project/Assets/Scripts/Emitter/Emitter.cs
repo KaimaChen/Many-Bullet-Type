@@ -1,34 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Emitter : MonoBehaviour
 {
-    private float mTriggerTime;
-    private Vector3 mOffset;
+    private readonly float mTriggerTime;
+    private readonly Vector3 mOffset;
+    private readonly BulletInitData mBulletInitData;
 
-    private BulletType mBulletType;
-    private float mSpeed;
-    private float mAccerate;
-    private float mLifeTime;
-    private Transform mTarget;
-
-    public Emitter(float triggerTime, Vector3 offset, BulletType bulletType, float speed, float accerate, float lifeTime, Transform target)
+    public Emitter(float triggerTime, Vector3 offset, BulletInitData bulletInitData)
     {
         mTriggerTime = triggerTime;
         mOffset = offset;
-        mBulletType = bulletType;
-        mSpeed = speed;
-        mAccerate = accerate;
-        mLifeTime = lifeTime;
-        mTarget = target;
+        mBulletInitData = bulletInitData;
     }
 
     public bool CheckTrigger(float curTime)
     {
         if(curTime >= mTriggerTime)
         {
-            //mBullet.Excute();
+            BulletFactory.Create(mBulletInitData);
             return true;
         }
         else
