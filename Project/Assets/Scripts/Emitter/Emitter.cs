@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Emitter : MonoBehaviour
+public class Emitter
 {
     public float TriggerTime { get; private set; }
     private readonly Vector3 mOffset;

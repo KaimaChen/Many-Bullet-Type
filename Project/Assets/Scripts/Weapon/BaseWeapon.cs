@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 public abstract class BaseWeapon : MonoBehaviour
 {
+    public BulletType BulletType;
+    public float BulletSpeed = 10;
+    public float BulletAccerate = 1;
+    public float BulletLifeTime = 1;
+    public Transform BulletTarget;
+
     protected List<Emitter> mEmitterList = new List<Emitter>();
     protected int mCurIndex = 0;
     private float mAccumulateTime = 0;

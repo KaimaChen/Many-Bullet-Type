@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//TODO: 好像有bug，有些不会停
 public class MoveStopBullet : BaseBullet
 {
     private float mMaxSpeed;
@@ -15,7 +16,7 @@ public class MoveStopBullet : BaseBullet
 
         Vector3 originLocalPos = transform.localPosition;
         float offset = mSpeed * deltaTime;
-        transform.localPosition = new Vector3(originLocalPos.x, originLocalPos.y, originLocalPos.z + offset);
+        transform.Translate(new Vector3(0, 0, offset), Space.Self);
 
         mSpeed += mAccerate * deltaTime;
         if (mSpeed <= 0 || mSpeed >= mMaxSpeed)

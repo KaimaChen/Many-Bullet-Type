@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 分散型
+/// 旋转型（头尾交叉）
 /// </summary>
-public class DisperseWeapon : BaseWeapon
+public class RotateWeapon1 : BaseWeapon
 {
     protected override void InitEmitterList()
     {
-        float deltaTime = 0.5f;
-        float deltaAngle = 36;
+        float deltaTime = 0.03f;
+        float deltaAngle = 10;
         int count = (int)(360 / deltaAngle);
         Vector3 originRotation = transform.rotation.eulerAngles;
 
@@ -17,18 +17,24 @@ public class DisperseWeapon : BaseWeapon
             BulletType = BulletType.Normal,
             Position = transform.position,
             Rotation = transform.rotation,
-            Speed = 15,
+            Speed = 20,
             Accerate = 2,
             LifeTime = 2,
             Target = null
         };
-
+        
         for(int i = 0; i < count; i++)
         {
+            float triggerTime = deltaTime * i;
             BulletInitData data = templateData;
+
             Vector3 rotation = originRotation + new Vector3(0, deltaAngle * i, 0);
             data.Rotation = Quaternion.Euler(rotation);
-            mEmitterList.Add(new Emitter(deltaTime, Vector3.zero, data));
+            mEmitterList.Add(new Emitter(triggerTime, Vector3.zero, data));
+
+            rotation = originRotation + new Vector3(0, 360 - deltaAngle * i, 0);
+            data.Rotation = Quaternion.Euler(rotation);
+            mEmitterList.Add(new Emitter(triggerTime, Vector3.zero, data));
         }
     }
 }

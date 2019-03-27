@@ -187,8 +187,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372311083}
-  m_LocalRotation: {x: -0.49486274, y: 0.06556219, z: -0.037490517, w: -0.86568296}
-  m_LocalPosition: {x: 1.9575303, y: 30.056118, z: -8.590519}
+  m_LocalRotation: {x: -0.70710695, y: 0.000000029802322, z: -0.000000038126018, w: -0.70710665}
+  m_LocalPosition: {x: -0.000000017081023, y: 53.059067, z: 0.0000061671653}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -223,9 +223,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 379694008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 360978e30c1b5054791e308f3c3cdcac, type: 3}
+  m_Script: {fileID: 11500000, guid: 41e827310db2efa46a7c3d4c0578f088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BulletType: 2
+  BulletSpeed: 10
+  BulletAccerate: 10
+  BulletLifeTime: 2
+  BulletTarget: {fileID: 0}
+  DeltaTime: 0.03
+  DeltaAngle: 10
 --- !u!136 &379694010
 CapsuleCollider:
   m_ObjectHideFlags: 0
