@@ -2,14 +2,12 @@
 
 public class ParabolaBullet : BaseBullet
 {
-    private const float kGravity = 9.8f;
-    
     private Vector3 mCurVelocity;
     private Vector3 mCurAccerate;
 
-    public void DoStart(float speed, float accerate, Vector3 targetPos)
+    public void DoStart(float speed, float accerate, Vector3 targetPos, float gravity)
     {
-        if(MathUtils.CalcParabolaData(transform.position, targetPos, speed, accerate, kGravity, out ParabolaData parabolaData))
+        if(MathUtils.CalcParabolaData(transform.position, targetPos, speed, accerate, gravity, out ParabolaData parabolaData))
         {
             base.DoStart(speed, accerate, parabolaData.TotalTime);
             mCurVelocity = parabolaData.Velocity;

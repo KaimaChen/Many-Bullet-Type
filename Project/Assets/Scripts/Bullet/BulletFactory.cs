@@ -48,7 +48,7 @@ public static class BulletFactory
     {
         GameObject go = LoadBullet(initData.BulletType, initData.Position, initData.Rotation);
         ParabolaBullet parabolaBullet = go.GetComponent<ParabolaBullet>();
-        parabolaBullet.DoStart(initData.Speed, initData.Accerate, initData.Target.position);
+        parabolaBullet.DoStart(initData.Speed, initData.Accerate, initData.TargetPos, initData.Gravity);
         return parabolaBullet;
     }
 

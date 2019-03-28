@@ -40,7 +40,7 @@ public class ControlPanel : MonoBehaviour
                 break;
             case 3:
                 GameObject go3 = LoadBullet("ParabolaBullet");
-                go3.GetComponent<ParabolaBullet>().DoStart(5, 1, Enemy.position);
+                go3.GetComponent<ParabolaBullet>().DoStart(5, 1, Enemy.position, 9.8f);
                 break;
         }
     }

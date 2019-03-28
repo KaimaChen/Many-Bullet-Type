@@ -8,10 +8,12 @@ public abstract class BaseWeapon : MonoBehaviour
     public float BulletAccerate = 1;
     public float BulletLifeTime = 1;
     public Transform BulletTarget;
+    public float Gravity = 9.8f;
 
     protected List<Emitter> mEmitterList = new List<Emitter>();
     protected int mCurIndex = 0;
-    private float mAccumulateTime = 0;
+    protected float mAccumulateTime = 0;
+    protected float mNextValidTime = 0;
 
     protected abstract void InitEmitterList();
 
@@ -28,19 +30,20 @@ public abstract class BaseWeapon : MonoBehaviour
     
     void Update()
     {
+        if (Time.time < mNextValidTime)
+            return;
+
+        //TODO: 第一次发射的时间间隔总是有点不对
+        mAccumulateTime += Time.deltaTime;
         for (int i = mCurIndex; i < mEmitterList.Count; i++)
         {
             Emitter emitter = mEmitterList[i];
-            if (!emitter.CheckTrigger(mAccumulateTime))
-                break;
-
-            mCurIndex++;
+            if (emitter.CheckTrigger(mAccumulateTime))
+                mCurIndex++;
         }
 
         if (mCurIndex >= mEmitterList.Count)
             DoDestroy();
-
-        mAccumulateTime += Time.deltaTime;
     }
     
     protected virtual void DoDestroy()

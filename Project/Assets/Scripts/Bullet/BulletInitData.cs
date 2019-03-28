@@ -9,4 +9,6 @@ public struct BulletInitData
     public float Accerate { get; set; }
     public float LifeTime { get; set; }
     public Transform Target { get; set; }
+    public Vector3 TargetPos { get; set; }
+    public float Gravity { get; set; }
 }
