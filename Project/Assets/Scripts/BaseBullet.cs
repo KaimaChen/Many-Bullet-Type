@@ -2,20 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class BaseBullet : MonoBehaviour
 {
-    [SerializeField] private float m_initSpeed;
-    [SerializeField] private float m_acceleration;
+    [SerializeField] protected float m_initSpeed;
+    [SerializeField] protected float m_acceleration;
+    [SerializeField] protected float m_lifeTime = 10;
+    [SerializeField] protected float m_atkRadius = 1f;
+
     private float m_curtSpeed;
+    private float m_lifeEndTime;
 
     protected virtual void Start()
     {
         m_curtSpeed = m_initSpeed;
+        m_lifeEndTime = Time.time + m_lifeTime;
     }
 
     protected virtual void Update()
     {
-        Move();
+        
+    }
+
+    protected bool IsDone()
+    {
+        return Time.time >= m_lifeEndTime;
     }
 
     protected void Move()

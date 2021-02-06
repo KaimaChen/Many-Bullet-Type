@@ -3,7 +3,7 @@
 /// <summary>
 /// 跟踪子弹
 /// </summary>
-public class FollowBullet : Bullet
+public class FollowBullet : BaseBullet
 {
     /// <summary>
     /// 跟踪目标
@@ -30,6 +30,12 @@ public class FollowBullet : Bullet
 
     protected override void Update()
     {
+        if (IsDone())
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (m_target == null)
             return;
 
