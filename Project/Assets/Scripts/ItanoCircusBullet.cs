@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 跟踪子弹
+/// 坂野马戏子弹
 /// </summary>
-public class FollowBullet : BaseBullet
+public class ItanoCircusBullet : BaseBullet
 {
     /// <summary>
     /// 跟踪目标
@@ -19,6 +19,16 @@ public class FollowBullet : BaseBullet
     /// 延迟多久后才执行跟踪
     /// </summary>
     [SerializeField] protected float m_delay;
+
+    /// <summary>
+    /// 多少几率会转随机角度
+    /// </summary>
+    [SerializeField] private float m_randomRotate = 0.01f;
+
+    /// <summary>
+    /// 多少几率会转向目标
+    /// </summary>
+    [SerializeField] private float m_randomForward = 0.4f;
 
     protected float m_validTime;
 
@@ -45,9 +55,14 @@ public class FollowBullet : BaseBullet
         if (dist <= 0)
             return;
 
-        if(Time.time >= m_validTime)
-            transform.forward = Vector3.Slerp(transform.forward, targetPos - pos, m_dirSpeed / dist);
-
+        if (Time.time >= m_validTime)
+        {
+            if (Random.value < m_randomRotate)
+                transform.Rotate(new Vector3(Random.Range(-5,5), Random.Range(-5, 5), Random.Range(-5, 5)), Space.Self);
+            else if(Random.value < m_randomForward)
+                transform.forward = Vector3.Slerp(transform.forward, targetPos - pos, m_dirSpeed / dist);
+        }
+            
         Move();
     }
 }
